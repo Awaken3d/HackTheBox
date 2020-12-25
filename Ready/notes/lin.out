@@ -1,0 +1,1011 @@
+
+[00;31m#########################################################[00m
+[00;31m#[00m [00;33mLocal Linux Enumeration & Privilege Escalation Script[00m [00;31m#[00m
+[00;31m#########################################################[00m
+[00;33m# www.rebootuser.com[00m
+[00;33m# version 0.982[00m
+
+[-] Debug Info
+[00;33m[+] Thorough tests = Disabled[00m
+
+
+[00;33mScan started at:
+Fri Dec 25 00:38:56 UTC 2020
+[00m
+
+[00;33m### SYSTEM ##############################################[00m
+[00;31m[-] Kernel information:[00m
+Linux gitlab.example.com 5.4.0-40-generic #44-Ubuntu SMP Tue Jun 23 00:01:04 UTC 2020 x86_64 x86_64 x86_64 GNU/Linux
+
+
+[00;31m[-] Kernel information (continued):[00m
+Linux version 5.4.0-40-generic (buildd@lcy01-amd64-011) (gcc version 9.3.0 (Ubuntu 9.3.0-10ubuntu2)) #44-Ubuntu SMP Tue Jun 23 00:01:04 UTC 2020
+
+
+[00;31m[-] Specific release information:[00m
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=16.04
+DISTRIB_CODENAME=xenial
+DISTRIB_DESCRIPTION="Ubuntu 16.04.5 LTS"
+NAME="Ubuntu"
+VERSION="16.04.5 LTS (Xenial Xerus)"
+ID=ubuntu
+ID_LIKE=debian
+PRETTY_NAME="Ubuntu 16.04.5 LTS"
+VERSION_ID="16.04"
+HOME_URL="http://www.ubuntu.com/"
+SUPPORT_URL="http://help.ubuntu.com/"
+BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+VERSION_CODENAME=xenial
+UBUNTU_CODENAME=xenial
+
+
+[00;31m[-] Hostname:[00m
+gitlab.example.com
+
+
+[00;33m### USER/GROUP ##########################################[00m
+[00;31m[-] Current user/group info:[00m
+uid=998(git) gid=998(git) groups=998(git)
+
+
+[00;31m[-] Users that have previously logged onto the system:[00m
+Username         Port     From             Latest
+
+
+[00;31m[-] Who else is logged on:[00m
+ 00:38:56 up  1:38,  0 users,  load average: 0.30, 0.12, 0.18
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+
+
+[00;31m[-] Group memberships:[00m
+uid=0(root) gid=0(root) groups=0(root)
+uid=1(daemon) gid=1(daemon) groups=1(daemon)
+uid=2(bin) gid=2(bin) groups=2(bin)
+uid=3(sys) gid=3(sys) groups=3(sys)
+uid=4(sync) gid=65534(nogroup) groups=65534(nogroup)
+uid=5(games) gid=60(games) groups=60(games)
+uid=6(man) gid=12(man) groups=12(man)
+uid=7(lp) gid=7(lp) groups=7(lp)
+uid=8(mail) gid=8(mail) groups=8(mail)
+uid=9(news) gid=9(news) groups=9(news)
+uid=10(uucp) gid=10(uucp) groups=10(uucp)
+uid=13(proxy) gid=13(proxy) groups=13(proxy)
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+uid=34(backup) gid=34(backup) groups=34(backup)
+uid=38(list) gid=38(list) groups=38(list)
+uid=39(irc) gid=39(irc) groups=39(irc)
+uid=41(gnats) gid=41(gnats) groups=41(gnats)
+uid=65534(nobody) gid=65534(nogroup) groups=65534(nogroup)
+uid=100(systemd-timesync) gid=102(systemd-timesync) groups=102(systemd-timesync)
+uid=101(systemd-network) gid=103(systemd-network) groups=103(systemd-network)
+uid=102(systemd-resolve) gid=104(systemd-resolve) groups=104(systemd-resolve)
+uid=103(systemd-bus-proxy) gid=105(systemd-bus-proxy) groups=105(systemd-bus-proxy)
+uid=104(_apt) gid=65534(nogroup) groups=65534(nogroup)
+uid=105(sshd) gid=65534(nogroup) groups=65534(nogroup)
+uid=998(git) gid=998(git) groups=998(git)
+uid=999(gitlab-www) gid=999(gitlab-www) groups=999(gitlab-www)
+uid=997(gitlab-redis) gid=997(gitlab-redis) groups=997(gitlab-redis)
+uid=996(gitlab-psql) gid=996(gitlab-psql) groups=996(gitlab-psql)
+uid=994(mattermost) gid=994(mattermost) groups=994(mattermost)
+uid=993(registry) gid=993(registry) groups=993(registry)
+uid=992(gitlab-prometheus) gid=992(gitlab-prometheus) groups=992(gitlab-prometheus)
+uid=991(gitlab-consul) gid=991(gitlab-consul) groups=991(gitlab-consul)
+uid=1000(dude) gid=1000(dude) groups=1000(dude)
+
+
+[00;31m[-] Contents of /etc/passwd:[00m
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+_apt:x:104:65534::/nonexistent:/bin/false
+sshd:x:105:65534::/var/run/sshd:/usr/sbin/nologin
+git:x:998:998::/var/opt/gitlab:/bin/sh
+gitlab-www:x:999:999::/var/opt/gitlab/nginx:/bin/false
+gitlab-redis:x:997:997::/var/opt/gitlab/redis:/bin/false
+gitlab-psql:x:996:996::/var/opt/gitlab/postgresql:/bin/sh
+mattermost:x:994:994::/var/opt/gitlab/mattermost:/bin/sh
+registry:x:993:993::/var/opt/gitlab/registry:/bin/sh
+gitlab-prometheus:x:992:992::/var/opt/gitlab/prometheus:/bin/sh
+gitlab-consul:x:991:991::/var/opt/gitlab/consul:/bin/sh
+dude:x:1000:1000::/home/dude:/bin/bash
+
+
+[00;31m[-] Super user account(s):[00m
+root
+
+
+[00;31m[-] Are permissions on /home directories lax:[00m
+total 12K
+drwxr-xr-x 1 root root 4.0K Dec  2 10:45 .
+drwxr-xr-x 1 root root 4.0K Dec 24 23:31 ..
+drwxr-xr-x 2 dude dude 4.0K Dec  7 16:58 dude
+
+
+[00;33m### ENVIRONMENTAL #######################################[00m
+[00;31m[-] Environment information:[00m
+BUNDLER_ORIG_PATH=/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin
+ICU_DATA=/opt/gitlab/embedded/share/icu/current
+MANPATH=/opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/unicorn-5.1.0/man
+GEM_HOME=/opt/gitlab/embedded/lib/ruby/gems/2.4.0
+prometheus_multiproc_dir=/dev/shm/gitlab/sidekiq
+BUNDLER_ORIG_MANPATH=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+BUNDLER_ORIG_GEM_HOME=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+LD_PRELOAD=/opt/gitlab/embedded/lib/libjemalloc.so
+BUNDLER_ORIG_BUNDLER_VERSION=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+GIT_TERMINAL_PROMPT=0
+BUNDLER_ORIG_BUNDLER_ORIG_MANPATH=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+RACK_ENV=production
+BUNDLER_ORIG_RUBYLIB=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+prometheus_run_dir=/dev/shm/gitlab/sidekiq
+BUNDLER_ORIG_RUBYOPT=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+SOCAT_PID=8578
+PATH=/var/opt/gitlab/bin:/var/opt/gitlab/.local/bin:/opt/gitlab/embedded/lib/ruby/gems/2.4.0/bin:/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin
+GID=998
+PWD=/tmp
+BUNDLER_ORIG_GEM_PATH=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+GITLAB_PATH_OUTSIDE_HOOK=/opt/gitlab/embedded/lib/ruby/gems/2.4.0/bin:/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin
+TZ=:/etc/localtime
+EXECJS_RUNTIME=Disabled
+SOCAT_VERSION=1.7.3.0
+SHLVL=3
+HOME=/var/opt/gitlab
+BUNDLE_GEMFILE=/opt/gitlab/embedded/service/gitlab-rails/Gemfile
+RAILS_ENV=production
+BUNDLER_ORIG_BUNDLE_GEMFILE=/opt/gitlab/embedded/service/gitlab-rails/Gemfile
+PYTHONPATH=/opt/gitlab/embedded/lib/python3.4/site-packages
+GEM_PATH=/opt/gitlab/embedded/lib/ruby/gems/2.4.0:/var/opt/gitlab/.gem/ruby/2.4.0
+UID=998
+SIDEKIQ_MEMORY_KILLER_MAX_RSS=2000000
+SOCAT_PPID=8578
+BUNDLER_ORIG_BUNDLE_BIN_PATH=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+RUBYOPT=-rbundler/setup
+BUNDLE_BIN_PATH=/opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/exe/bundle
+BUNDLER_ORIG_RB_USER_INSTALL=BUNDLER_ENVIRONMENT_PRESERVER_INTENTIONALLY_NIL
+RUBYLIB=/opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/bundler-1.16.2/lib
+BUNDLER_VERSION=1.16.2
+_=/usr/bin/env
+
+
+[00;31m[-] Path information:[00m
+/var/opt/gitlab/bin:/var/opt/gitlab/.local/bin:/opt/gitlab/embedded/lib/ruby/gems/2.4.0/bin:/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin
+drwxr-xr-x 1 root root 4096 Dec  1 15:40 /bin
+drwxr-xr-x 2 root root 4096 Nov 20  2018 /opt/gitlab/bin
+drwxr-xr-x 1 root root 4096 Dec  1 12:42 /opt/gitlab/embedded/bin
+drwxr-xr-x 1 root root 4096 Nov 20  2018 /usr/bin
+
+
+[00;31m[-] Available shells:[00m
+# /etc/shells: valid login shells
+/bin/sh
+/bin/dash
+/bin/bash
+/bin/rbash
+
+
+[00;31m[-] Current umask value:[00m
+0022
+u=rwx,g=rx,o=rx
+
+
+[00;31m[-] umask value as specified in /etc/login.defs:[00m
+UMASK		022
+
+
+[00;31m[-] Password and storage information:[00m
+PASS_MAX_DAYS	99999
+PASS_MIN_DAYS	0
+PASS_WARN_AGE	7
+ENCRYPT_METHOD SHA512
+
+
+[00;33m### JOBS/TASKS ##########################################[00m
+[00;31m[-] Cron jobs:[00m
+/etc/cron.daily:
+total 24
+drwxr-xr-x 2 root root 4096 Nov 13  2018 .
+drwxr-xr-x 1 root root 4096 Dec  2 10:45 ..
+-rwxr-xr-x 1 root root 1474 Oct  9  2018 apt-compat
+-rwxr-xr-x 1 root root 1597 Nov 26  2015 dpkg
+-rwxr-xr-x 1 root root  249 Nov 12  2015 passwd
+
+/etc/cron.weekly:
+total 16
+drwxr-xr-x 2 root root 4096 Nov 13  2018 .
+drwxr-xr-x 1 root root 4096 Dec  2 10:45 ..
+-rwxr-xr-x 1 root root   86 Apr 13  2016 fstrim
+
+
+[00;33m### NETWORKING  ##########################################[00m
+[00;31m[-] Nameserver(s):[00m
+nameserver 127.0.0.11
+
+
+[00;33m### SERVICES #############################################[00m
+[00;31m[-] Running processes:[00m
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0  18044  2636 ?        Ss   Dec24   0:00 /bin/bash /assets/wrapper
+root          12  0.0  0.0   4388  1116 ?        S    Dec24   0:00 runsvdir -P /opt/gitlab/service log: ...........................................................................................................................................................................................................................................................................................................................................................................................................
+root          15  0.0  0.0   4236   612 ?        Ss   Dec24   0:00 runsv sshd
+root          16  0.0  0.0   4380   604 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/sshd
+root          17  0.0  0.1  65504  4540 ?        S    Dec24   0:00 /usr/sbin/sshd -D -f /assets/sshd_config -e
+root         456  0.0  0.0   4236   612 ?        Ss   Dec24   0:00 runsv nginx
+root         457  0.0  0.0   4236   612 ?        Ss   Dec24   0:00 runsv redis
+root         458  0.0  0.0   4236   620 ?        Ss   Dec24   0:00 runsv gitlab-workhorse
+root         459  0.0  0.0   4236   768 ?        Ss   Dec24   0:00 runsv sidekiq
+root         460  0.0  0.0   4236   668 ?        Ss   Dec24   0:00 runsv postgresql
+root         461  0.0  0.0   4236   620 ?        Ss   Dec24   0:00 runsv logrotate
+root         462  0.0  0.0   4236   616 ?        Ss   Dec24   0:00 runsv unicorn
+root         463  0.0  0.0   4380   764 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/nginx
+root         464  0.0  0.0   4380   688 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/redis
+root         465  0.0  0.1  42808  5156 ?        Ss   Dec24   0:00 nginx: master process /opt/gitlab/embedded/sbin/nginx -p /var/opt/gitlab/nginx
+gitlab-+     466  1.8  0.5  62124 21044 ?        Ssl  Dec24   1:45 /opt/gitlab/embedded/bin/redis-server 127.0.0.1:6379
+root         467  0.0  0.0   4380   648 ?        S    Dec24   0:04 svlogd -tt /var/log/gitlab/gitlab-workhorse
+root         468  0.0  0.0   4380   688 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/postgresql
+root         469  0.0  0.0   4380   596 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/sidekiq
+git          470  2.2  0.5 516624 21172 ?        Ssl  Dec24   2:10 /opt/gitlab/embedded/bin/gitlab-workhorse -listenNetwork unix -listenUmask 0 -listenAddr /var/opt/gitlab/gitlab-workhorse/socket -authBackend http://localhost:8080 -authSocket /var/opt/gitlab/gitlab-rails/sockets/gitlab.socket -documentRoot /opt/gitlab/embedded/service/gitlab-rails/public -pprofListenAddr  -prometheusListenAddr localhost:9229 -secretPath /opt/gitlab/embedded/service/gitlab-rails/.gitlab_workhorse_secret -config config.toml
+gitlab-+     471  0.0  0.4  50080 17780 ?        Ss   Dec24   0:00 /opt/gitlab/embedded/bin/postgres -D /var/opt/gitlab/postgresql/data
+git          472  4.0 11.3 910108 458116 ?       Ssl  Dec24   3:56 sidekiq 5.2.1 gitlab-rails [0 of 25 busy]
+root         473  0.0  0.0   4380   600 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/unicorn
+root         474  0.0  0.0   4380   600 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/logrotate
+git          475  0.0  0.0  18164  3064 ?        Ss   Dec24   0:03 /bin/bash /opt/gitlab/embedded/bin/gitlab-unicorn-wrapper
+gitlab-+     486  0.5  0.1  47060  7888 ?        S    Dec24   0:31 nginx: worker process
+gitlab-+     487  0.5  0.0  47060  3248 ?        S    Dec24   0:31 nginx: worker process
+gitlab-+     488  0.5  0.1  47060  6832 ?        S    Dec24   0:31 nginx: worker process
+gitlab-+     489  0.4  0.1  47060  6588 ?        S    Dec24   0:25 nginx: worker process
+gitlab-+     490  0.0  0.0  42808  2732 ?        S    Dec24   0:00 nginx: cache manager process
+gitlab-+     523  0.0  0.1  50184  5672 ?        Ss   Dec24   0:00 postgres: checkpointer process   
+gitlab-+     524  0.0  0.1  50080  5464 ?        Ss   Dec24   0:00 postgres: writer process   
+gitlab-+     525  0.0  0.0  50080  3672 ?        Ss   Dec24   0:00 postgres: wal writer process   
+gitlab-+     526  0.0  0.1  50632  7312 ?        Ss   Dec24   0:00 postgres: autovacuum launcher process   
+gitlab-+     527  0.0  0.1  33000  4520 ?        Ss   Dec24   0:02 postgres: stats collector process   
+root         528  0.0  0.0   4236   696 ?        Ss   Dec24   0:00 runsv gitaly
+root         529  0.0  0.0   4236   660 ?        Ss   Dec24   0:00 runsv redis-exporter
+root         530  0.0  0.0   4236   656 ?        Ss   Dec24   0:00 runsv node-exporter
+root         531  0.0  0.0   4236   664 ?        Ss   Dec24   0:00 runsv gitlab-monitor
+root         532  0.0  0.0   4380   708 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/node-exporter
+root         533  0.0  0.0   4380   808 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/redis-exporter
+gitlab-+     534  0.0  0.2 256036 10984 ?        Ssl  Dec24   0:01 /opt/gitlab/embedded/bin/redis_exporter --web.listen-address=localhost:9121 --redis.addr=unix:///var/opt/gitlab/redis/redis.socket
+root         535  0.0  0.0   4380   656 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/gitlab-monitor
+gitlab-+     536  0.1  0.3  20108 14196 ?        Ssl  Dec24   0:08 /opt/gitlab/embedded/bin/node_exporter --web.listen-address=localhost:9100 --collector.textfile.directory=/var/opt/gitlab/node-exporter/textfile_collector
+git          537  1.2  0.8 444896 33692 ?        Ssl  Dec24   1:14 /opt/gitlab/embedded/bin/ruby /opt/gitlab/embedded/bin/gitlab-mon web -c /var/opt/gitlab/gitlab-monitor/gitlab-monitor.yml
+root         538  0.0  0.0   4380   752 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/gitaly
+git          539  0.4  0.5 745096 22856 ?        Ssl  Dec24   0:25 /opt/gitlab/embedded/bin/gitaly /var/opt/gitlab/gitaly/config.toml
+root         563  0.0  0.0   4236   640 ?        Ss   Dec24   0:00 runsv postgres-exporter
+root         564  0.0  0.0   4236   672 ?        Ss   Dec24   0:00 runsv alertmanager
+root         565  0.0  0.0   4236   652 ?        Ss   Dec24   0:00 runsv prometheus
+root         566  0.0  0.0   4380   800 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/prometheus
+gitlab-+     567  1.5  1.9 791144 80284 ?        Ssl  Dec24   1:31 /opt/gitlab/embedded/bin/prometheus --web.listen-address=localhost:9090 --storage.tsdb.path=/var/opt/gitlab/prometheus/data --config.file=/var/opt/gitlab/prometheus/prometheus.yml
+root         568  0.0  0.0   4380   668 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/alertmanager
+root         569  0.0  0.0   4380   708 ?        S    Dec24   0:00 svlogd -tt /var/log/gitlab/postgres-exporter
+gitlab-+     570  0.1  0.3 246248 13404 ?        Ssl  Dec24   0:06 /opt/gitlab/embedded/bin/postgres_exporter --web.listen-address=localhost:9187 --extend.query-path=/var/opt/gitlab/postgres-exporter/queries.yaml
+gitlab-+     571  0.1  0.2 480292  9192 ?        Ssl  Dec24   0:07 /opt/gitlab/embedded/bin/alertmanager --web.listen-address=localhost:9093 --storage.path=/var/opt/gitlab/alertmanager/data --config.file=/var/opt/gitlab/alertmanager/alertmanager.yml
+gitlab-+     582  0.1  0.4  58752 17788 ?        Ss   Dec24   0:06 postgres: gitlab-psql postgres [local] idle
+git          603  0.3  1.6 2371868 65812 ?       Sl   Dec24   0:20 ruby /opt/gitlab/embedded/service/gitaly-ruby/bin/gitaly-ruby 539 /tmp/gitaly-ruby167812547/socket.0
+git          608  0.3  1.6 2371832 65920 ?       Sl   Dec24   0:23 ruby /opt/gitlab/embedded/service/gitaly-ruby/bin/gitaly-ruby 539 /tmp/gitaly-ruby167812547/socket.1
+git          619  2.6 10.9 748160 440548 ?       Sl   Dec24   2:32 unicorn master -D -E production -c /var/opt/gitlab/gitlab-rails/etc/unicorn.rb /opt/gitlab/embedded/service/gitlab-rails/config.ru
+root         630  0.0  0.0  18028  2812 ?        S    Dec24   0:00 /bin/bash /opt/gitlab/bin/gitlab-ctl tail
+root         631  0.1  0.6  96896 25088 ?        Sl   Dec24   0:07 /opt/gitlab/embedded/bin/ruby /opt/gitlab/embedded/bin/omnibus-ctl gitlab /opt/gitlab/embedded/service/omnibus-ctl* tail
+gitlab-+     637  0.1  0.4  58996 17328 ?        Ss   Dec24   0:07 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+     647  0.0  0.3  57780 14332 ?        Ss   Dec24   0:03 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+     652  0.0  0.3  58416 15800 ?        Ss   Dec24   0:05 postgres: gitlab gitlabhq_production [local] idle
+root         674  0.0  0.0   4500   744 ?        S    Dec24   0:00 sh -c find -L /var/log/gitlab -type f -not -path '*/sasl/*' | grep -E -v '(config|lock|@|gzip|tgz|gz)' | xargs tail --follow=name --retry
+root         677  0.0  0.0   4672  1232 ?        S    Dec24   0:00 xargs tail --follow=name --retry
+root         678  0.0  0.0   4404   704 ?        S    Dec24   0:02 tail --follow=name --retry /var/log/gitlab/nginx/current /var/log/gitlab/nginx/error.log /var/log/gitlab/nginx/gitlab_error.log /var/log/gitlab/nginx/gitlab_access.log /var/log/gitlab/nginx/access.log /var/log/gitlab/gitaly/current /var/log/gitlab/gitaly/state /var/log/gitlab/redis/current /var/log/gitlab/redis/state /var/log/gitlab/redis-exporter/current /var/log/gitlab/redis-exporter/state /var/log/gitlab/postgres-exporter/current /var/log/gitlab/postgres-exporter/state /var/log/gitlab/gitlab-shell/gitlab-shell.log /var/log/gitlab/gitlab-workhorse/current /var/log/gitlab/gitlab-workhorse/state /var/log/gitlab/sidekiq/current /var/log/gitlab/sidekiq/state /var/log/gitlab/node-exporter/current /var/log/gitlab/node-exporter/state /var/log/gitlab/postgresql/current /var/log/gitlab/postgresql/state /var/log/gitlab/gitlab-rails/application.log /var/log/gitlab/gitlab-rails/grpc.log /var/log/gitlab/gitlab-rails/sidekiq_exporter.log /var/log/gitlab/gitlab-rails/gitlab-rails-db-migrate-2020-07-08-08-52-42.log /var/log/gitlab/gitlab-rails/api_json.log /var/log/gitlab/gitlab-rails/production_json.log /var/log/gitlab/gitlab-rails/sidekiq.log /var/log/gitlab/gitlab-rails/production.log /var/log/gitlab/gitlab-rails/gitlab-rails-db-migrate-2020-12-04-14-12-34.log /var/log/gitlab/alertmanager/current /var/log/gitlab/alertmanager/state /var/log/gitlab/prometheus/current /var/log/gitlab/prometheus/state /var/log/gitlab/sshd/current /var/log/gitlab/logrotate/current /var/log/gitlab/logrotate/state /var/log/gitlab/unicorn/current /var/log/gitlab/unicorn/state /var/log/gitlab/unicorn/unicorn_stdout.log /var/log/gitlab/unicorn/unicorn_stderr.log /var/log/gitlab/gitlab-monitor/current /var/log/gitlab/gitlab-monitor/state
+git         1012 11.3 12.0 840600 484828 ?       Sl   Dec24  10:39 unicorn worker[0] -D -E production -c /var/opt/gitlab/gitlab-rails/etc/unicorn.rb /opt/gitlab/embedded/service/gitlab-rails/config.ru
+git         1015 10.9 12.1 846744 490340 ?       Sl   Dec24  10:13 unicorn worker[1] -D -E production -c /var/opt/gitlab/gitlab-rails/etc/unicorn.rb /opt/gitlab/embedded/service/gitlab-rails/config.ru
+git         1021 11.0 12.0 844696 483844 ?       Sl   Dec24  10:21 unicorn worker[3] -D -E production -c /var/opt/gitlab/gitlab-rails/etc/unicorn.rb /opt/gitlab/embedded/service/gitlab-rails/config.ru
+git         1024 10.8 12.1 846744 491576 ?       Sl   Dec24  10:07 unicorn worker[4] -D -E production -c /var/opt/gitlab/gitlab-rails/etc/unicorn.rb /opt/gitlab/embedded/service/gitlab-rails/config.ru
+gitlab-+    1028  1.2  0.4  62568 18668 ?        Ss   Dec24   1:11 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    1029  1.3  0.4  63968 20088 ?        Ss   Dec24   1:13 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    1034  1.3  0.4  62672 19112 ?        Ss   Dec24   1:16 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    1035  1.1  0.4  63472 19468 ?        Ss   Dec24   1:07 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    1416  0.0  0.4  58544 16676 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         1433  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         1478  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         1541  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         1636  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         1665  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         1713  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         1771  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         1798  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         1850  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         1927  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         1972  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2052  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2166  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         2236  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2253  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2313  0.0  0.0  18320  2456 ?        S    Dec24   0:00 sh
+git         2362  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2395  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    2406  0.0  0.3  58384 15568 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         2418  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2426  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2544  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2546  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2672  0.0  0.2  44432 10244 ?        S    Dec24   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+git         2675  0.0  0.1  30132  4092 pts/0    Ss   Dec24   0:00 /bin/bash
+git         2720  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         2734  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2811  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         2826  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         2847  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         2901  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         2944  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         2963  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         3012  0.0  0.0      0     0 ?        Z    Dec24   0:00 [sh] <defunct>
+git         3098  0.0  0.0  18320  2476 ?        S    Dec24   0:00 sh
+git         3109  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3128  0.0  0.0  18320  1856 ?        S    Dec24   0:00 sh
+git         3143  0.0  0.0  18320  1820 ?        S    Dec24   0:00 sh
+git         3192  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3213  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    3227  0.0  0.3  58280 15368 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         3245  0.0  0.2  44432 10304 ?        S    Dec24   0:00 python3 -c import pty; pty.spawn("/bin/sh")
+git         3246  0.0  0.0  18320  2508 pts/1    Ss   Dec24   0:00 /bin/sh
+git         3279  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3316  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    3324  0.0  0.3  58288 15340 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         3328  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3331  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3357  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+root        3402  0.0  0.0  46988  2960 pts/1    S    Dec24   0:00 su
+root        3404  0.0  0.0  18232  3316 pts/1    S+   Dec24   0:00 bash
+git         3491  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3571  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3587  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3662  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    3682  0.0  0.3  58248 15396 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         3684  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3760  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3911  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         3937  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    4462  0.0  0.3  58288 15400 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         4465  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    4493  0.0  0.3  58288 15432 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         4495  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    4547  0.0  0.3  58288 15408 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         4550  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    4621  0.0  0.3  58304 15300 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         4740  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         5209  0.0  0.0  22700  2912 pts/0    S+   Dec24   0:00 redis-cli
+gitlab-+    5724  0.0  0.3  58392 15980 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         5727  0.0  0.0  18320  2600 ?        S    Dec24   0:00 sh
+git         5760  0.0  0.2  44432 10316 ?        S    Dec24   0:00 python3 -c import pty; pty.spawn("/bin/bash")
+git         5762  0.0  0.1  30136  4120 pts/2    Ss   Dec24   0:00 /bin/bash
+git         5780  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         5890  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         6014  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         6285  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+git         7054  0.0  0.0      0     0 ?        Z    Dec24   0:00 [nc] <defunct>
+gitlab-+    7136  0.0  0.3  58336 15504 ?        Ss   Dec24   0:00 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    8425  0.0  0.3  58248 13692 ?        Ss   00:00   0:00 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    8430  0.0  0.3  58560 15804 ?        Ss   00:00   0:00 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    8439  0.0  0.3  58332 15284 ?        Ss   00:00   0:00 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    8444  0.0  0.3  58424 16068 ?        Ss   00:00   0:00 postgres: gitlab gitlabhq_production [local] idle
+gitlab-+    8449  0.0  0.3  58292 15100 ?        Ss   00:00   0:00 postgres: gitlab gitlabhq_production [local] idle
+git         8578  0.0  0.0    548     4 pts/2    S+   00:01   0:00 ./socat exec:bash -li,pty,stderr,setsid,sigint,sane tcp:10.10.14.170:4444
+git         8579  0.0  0.1  30148  4176 pts/3    Ss   00:01   0:00 bash -li
+root        8618  0.0  0.0   4500   836 ?        Ss   00:01   0:00 /bin/sh /opt/gitlab/embedded/bin/gitlab-logrotate-wrapper
+git         9497  0.1 11.6 785260 468180 ?       Sl   00:08   0:02 unicorn worker[2] -D -E production -c /var/opt/gitlab/gitlab-rails/etc/unicorn.rb /opt/gitlab/embedded/service/gitlab-rails/config.ru
+gitlab-+    9795  0.0  0.3  58292 14240 ?        Ss   00:10   0:00 postgres: gitlab gitlabhq_production [local] idle
+root        9943  0.0  0.0   4372   696 ?        S    00:11   0:00 sleep 3000
+git        13808  0.0  0.1  30936  4768 pts/3    S+   00:38   0:00 /bin/bash ./linenum.sh
+git        13809  0.5  0.0  31020  3956 pts/3    S+   00:38   0:00 /bin/bash ./linenum.sh
+git        13810  0.0  0.0  18196  1764 pts/3    S+   00:38   0:00 tee -a
+git        13856  0.0  0.0   4372   676 ?        S    00:38   0:00 sleep 1
+git        13969  0.0  0.0  30988  3396 pts/3    S+   00:38   0:00 /bin/bash ./linenum.sh
+git        13970  0.0  0.0  45808  3676 pts/3    R+   00:38   0:00 ps aux
+
+
+[00;31m[-] Process binaries and associated permissions (from above list):[00m
+-rwxr-xr-x 1 git  git    375176 Dec 24 23:55 ./socat
+-rwxr-xr-x 1 root root  1037528 May 16  2017 /bin/bash
+lrwxrwxrwx 1 root root        4 Feb 17  2016 /bin/sh -> dash
+-rwxr-xr-x 1 root root 21391491 Nov 20  2018 /opt/gitlab/embedded/bin/alertmanager
+-rwxr-xr-x 1 root root 21770527 Nov 20  2018 /opt/gitlab/embedded/bin/gitaly
+-rwxr-xr-x 1 root root 21516818 Nov 20  2018 /opt/gitlab/embedded/bin/gitlab-workhorse
+-rwxr-xr-x 1 root root 16201838 Nov 20  2018 /opt/gitlab/embedded/bin/node_exporter
+lrwxrwxrwx 1 root root       50 Nov 20  2018 /opt/gitlab/embedded/bin/postgres -> /opt/gitlab/embedded/postgresql/9.6.8/bin/postgres
+-rwxr-xr-x 1 root root 13352121 Nov 20  2018 /opt/gitlab/embedded/bin/postgres_exporter
+lrwxrwxrwx 1 root root       36 Dec  1 12:42 /opt/gitlab/embedded/bin/prometheus -> /opt/gitlab/embedded/bin/prometheus2
+-rwxr-xr-x 1 root root  5229608 Nov 20  2018 /opt/gitlab/embedded/bin/redis-server
+-rwxr-xr-x 1 root root 10737741 Nov 20  2018 /opt/gitlab/embedded/bin/redis_exporter
+-rwxr-xr-x 1 root root    12336 Nov 20  2018 /opt/gitlab/embedded/bin/ruby
+-rwxr-xr-x 1 root root   791024 Nov  5  2018 /usr/sbin/sshd
+
+
+[00;31m[-] /etc/init.d/ binary permissions:[00m
+total 152
+drwxr-xr-x 1 root root 4096 Nov 20  2018 .
+drwxr-xr-x 1 root root 4096 Dec  2 10:45 ..
+-rw-r--r-- 1 root root  663 Nov 20  2018 .depend.boot
+-rw-r--r-- 1 root root  109 Nov 20  2018 .depend.start
+-rw-r--r-- 1 root root  205 Nov 20  2018 .depend.stop
+-rw-r--r-- 1 root root 2427 Jan 19  2016 README
+-rwxr-xr-x 1 root root 1275 Jan 19  2016 bootmisc.sh
+-rwxr-xr-x 1 root root 3807 Jan 19  2016 checkfs.sh
+-rwxr-xr-x 1 root root 1098 Jan 19  2016 checkroot-bootclean.sh
+-rwxr-xr-x 1 root root 9353 Jan 19  2016 checkroot.sh
+-rwxr-xr-x 1 root root 1336 Jan 19  2016 halt
+-rwxr-xr-x 1 root root 1423 Jan 19  2016 hostname.sh
+-rwxr-xr-x 1 root root 3809 Mar 12  2016 hwclock.sh
+-rwxr-xr-x 1 root root 1300 Jan 19  2016 killprocs
+-rwxr-xr-x 1 root root  703 Jan 19  2016 mountall-bootclean.sh
+-rwxr-xr-x 1 root root 2301 Jan 19  2016 mountall.sh
+-rwxr-xr-x 1 root root 1461 Jan 19  2016 mountdevsubfs.sh
+-rwxr-xr-x 1 root root 1564 Jan 19  2016 mountkernfs.sh
+-rwxr-xr-x 1 root root  711 Jan 19  2016 mountnfs-bootclean.sh
+-rwxr-xr-x 1 root root 2456 Jan 19  2016 mountnfs.sh
+-rwxr-xr-x 1 root root 1581 Oct 16  2015 ondemand
+-rwxr-xr-x 1 root root 1192 Sep  6  2015 procps
+-rwxr-xr-x 1 root root 6366 Jan 19  2016 rc
+-rwxr-xr-x 1 root root  820 Jan 19  2016 rc.local
+-rwxr-xr-x 1 root root  117 Jan 19  2016 rcS
+-rwxr-xr-x 1 root root  661 Jan 19  2016 reboot
+-rwxr-xr-x 1 root root 3927 Jan 19  2016 sendsigs
+-rwxr-xr-x 1 root root  597 Jan 19  2016 single
+-rw-r--r-- 1 root root 1087 Jan 19  2016 skeleton
+-rwxr-xr-x 1 root root 4077 Aug 21  2018 ssh
+-rwxr-xr-x 1 root root 2737 Jan 19  2016 umountfs
+-rwxr-xr-x 1 root root 2202 Jan 19  2016 umountnfs.sh
+-rwxr-xr-x 1 root root 1879 Jan 19  2016 umountroot
+-rwxr-xr-x 1 root root 3111 Jan 19  2016 urandom
+
+
+[00;31m[-] /etc/init/ config file permissions:[00m
+total 48
+drwxr-xr-x 1 root root 4096 Nov 20  2018 .
+drwxr-xr-x 1 root root 4096 Dec  2 10:45 ..
+-rw-r--r-- 1 root root  284 Jul 23  2013 hostname.conf
+-rw-r--r-- 1 root root  300 May 21  2014 hostname.sh.conf
+-rw-r--r-- 1 root root  561 Mar 14  2016 hwclock-save.conf
+-rw-r--r-- 1 root root  674 Mar 14  2016 hwclock.conf
+-rw-r--r-- 1 root root  109 Mar 14  2016 hwclock.sh.conf
+-rw-r--r-- 1 root root  568 Feb  1  2016 passwd.conf
+-rw-r--r-- 1 root root  363 Jun  5  2014 procps-instance.conf
+-rw-r--r-- 1 root root  119 Jun  5  2014 procps.conf
+-rw-r--r-- 1 root root  641 Aug 21  2018 ssh.conf
+
+
+[00;31m[-] /lib/systemd/* config file permissions:[00m
+/lib/systemd/:
+total 7.8M
+drwxr-xr-x 1 root root 4.0K Nov 20  2018 system
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 network
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 system-generators
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 system-preset
+-rwxr-xr-x 1 root root 268K Nov  9  2018 systemd-cgroups-agent
+-rwxr-xr-x 1 root root  91K Nov  9  2018 systemd-cryptsetup
+-rwxr-xr-x 1 root root 301K Nov  9  2018 systemd-fsck
+-rwxr-xr-x 1 root root  51K Nov  9  2018 systemd-remount-fs
+-rwxr-xr-x 1 root root 276K Nov  9  2018 systemd-update-utmp
+-rwxr-xr-x 1 root root  35K Nov  9  2018 systemd-user-sessions
+-rwxr-xr-x 1 root root  55K Nov  9  2018 systemd-activate
+-rwxr-xr-x 1 root root  47K Nov  9  2018 systemd-binfmt
+-rwxr-xr-x 1 root root 352K Nov  9  2018 systemd-bus-proxyd
+-rwxr-xr-x 1 root root 276K Nov  9  2018 systemd-initctl
+-rwxr-xr-x 1 root root 340K Nov  9  2018 systemd-localed
+-rwxr-xr-x 1 root root  51K Nov  9  2018 systemd-modules-load
+-rwxr-xr-x 1 root root 836K Nov  9  2018 systemd-networkd
+-rwxr-xr-x 1 root root  35K Nov  9  2018 systemd-quotacheck
+-rwxr-xr-x 1 root root  35K Nov  9  2018 systemd-random-seed
+-rwxr-xr-x 1 root root  91K Nov  9  2018 systemd-rfkill
+-rwxr-xr-x 1 root root  71K Nov  9  2018 systemd-sleep
+-rwxr-xr-x 1 root root 333K Nov  9  2018 systemd-timedated
+-rwxr-xr-x 1 root root 1.6M Nov  9  2018 systemd
+-rwxr-xr-x 1 root root  91K Nov  9  2018 systemd-backlight
+-rwxr-xr-x 1 root root 103K Nov  9  2018 systemd-bootchart
+-rwxr-xr-x 1 root root  75K Nov  9  2018 systemd-fsckd
+-rwxr-xr-x 1 root root 332K Nov  9  2018 systemd-hostnamed
+-rwxr-xr-x 1 root root 123K Nov  9  2018 systemd-networkd-wait-online
+-rwxr-xr-x 1 root root 143K Nov  9  2018 systemd-shutdown
+-rwxr-xr-x 1 root root  91K Nov  9  2018 systemd-socket-proxyd
+-rwxr-xr-x 1 root root  55K Nov  9  2018 systemd-sysctl
+-rwxr-xr-x 1 root root 139K Nov  9  2018 systemd-timesyncd
+-rwxr-xr-x 1 root root  15K Nov  9  2018 systemd-ac-power
+-rwxr-xr-x 1 root root  31K Nov  9  2018 systemd-hibernate-resume
+-rwxr-xr-x 1 root root 319K Nov  9  2018 systemd-journald
+-rwxr-xr-x 1 root root 605K Nov  9  2018 systemd-logind
+-rwxr-xr-x 1 root root  31K Nov  9  2018 systemd-reply-password
+-rwxr-xr-x 1 root root 657K Nov  9  2018 systemd-resolved
+-rwxr-xr-x 1 root root 1.3K Nov  8  2018 systemd-sysv-install
+drwxr-xr-x 2 root root 4.0K Apr 12  2016 system-shutdown
+drwxr-xr-x 2 root root 4.0K Apr 12  2016 system-sleep
+
+/lib/systemd/system:
+total 648K
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 busnames.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 getty.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 graphical.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 local-fs.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 multi-user.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 poweroff.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 rc-local.service.d
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 reboot.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 rescue.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 resolvconf.service.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 sigpwr.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 sockets.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 sysinit.target.wants
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 systemd-resolved.service.d
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 systemd-timesyncd.service.d
+drwxr-xr-x 2 root root 4.0K Nov 13  2018 timers.target.wants
+lrwxrwxrwx 1 root root   14 Nov  9  2018 autovt@.service -> getty@.service
+lrwxrwxrwx 1 root root    9 Nov  9  2018 bootlogd.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 bootlogs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 bootmisc.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 checkfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 checkroot-bootclean.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 checkroot.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 cryptdisks-early.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 cryptdisks.service -> /dev/null
+lrwxrwxrwx 1 root root   13 Nov  9  2018 ctrl-alt-del.target -> reboot.target
+lrwxrwxrwx 1 root root   25 Nov  9  2018 dbus-org.freedesktop.hostname1.service -> systemd-hostnamed.service
+lrwxrwxrwx 1 root root   23 Nov  9  2018 dbus-org.freedesktop.locale1.service -> systemd-localed.service
+lrwxrwxrwx 1 root root   22 Nov  9  2018 dbus-org.freedesktop.login1.service -> systemd-logind.service
+lrwxrwxrwx 1 root root   24 Nov  9  2018 dbus-org.freedesktop.network1.service -> systemd-networkd.service
+lrwxrwxrwx 1 root root   24 Nov  9  2018 dbus-org.freedesktop.resolve1.service -> systemd-resolved.service
+lrwxrwxrwx 1 root root   25 Nov  9  2018 dbus-org.freedesktop.timedate1.service -> systemd-timedated.service
+lrwxrwxrwx 1 root root   16 Nov  9  2018 default.target -> graphical.target
+lrwxrwxrwx 1 root root    9 Nov  9  2018 fuse.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 halt.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 hostname.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 hwclock.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 killprocs.service -> /dev/null
+lrwxrwxrwx 1 root root   28 Nov  9  2018 kmod.service -> systemd-modules-load.service
+lrwxrwxrwx 1 root root   28 Nov  9  2018 module-init-tools.service -> systemd-modules-load.service
+lrwxrwxrwx 1 root root    9 Nov  9  2018 motd.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 mountall-bootclean.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 mountall.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 mountdevsubfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 mountkernfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 mountnfs-bootclean.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 mountnfs.service -> /dev/null
+lrwxrwxrwx 1 root root   22 Nov  9  2018 procps.service -> systemd-sysctl.service
+lrwxrwxrwx 1 root root   16 Nov  9  2018 rc.local.service -> rc-local.service
+lrwxrwxrwx 1 root root    9 Nov  9  2018 rc.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 rcS.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 reboot.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 rmnologin.service -> /dev/null
+lrwxrwxrwx 1 root root   15 Nov  9  2018 runlevel0.target -> poweroff.target
+lrwxrwxrwx 1 root root   13 Nov  9  2018 runlevel1.target -> rescue.target
+lrwxrwxrwx 1 root root   17 Nov  9  2018 runlevel2.target -> multi-user.target
+lrwxrwxrwx 1 root root   17 Nov  9  2018 runlevel3.target -> multi-user.target
+lrwxrwxrwx 1 root root   17 Nov  9  2018 runlevel4.target -> multi-user.target
+lrwxrwxrwx 1 root root   16 Nov  9  2018 runlevel5.target -> graphical.target
+lrwxrwxrwx 1 root root   13 Nov  9  2018 runlevel6.target -> reboot.target
+lrwxrwxrwx 1 root root    9 Nov  9  2018 sendsigs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 single.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 stop-bootlogd-single.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 stop-bootlogd.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 umountfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 umountnfs.service -> /dev/null
+lrwxrwxrwx 1 root root    9 Nov  9  2018 umountroot.service -> /dev/null
+lrwxrwxrwx 1 root root   27 Nov  9  2018 urandom.service -> systemd-random-seed.service
+lrwxrwxrwx 1 root root    9 Nov  9  2018 x11-common.service -> /dev/null
+-rw-r--r-- 1 root root  770 Nov  9  2018 console-getty.service
+-rw-r--r-- 1 root root  742 Nov  9  2018 console-shell.service
+-rw-r--r-- 1 root root  791 Nov  9  2018 container-getty@.service
+-rw-r--r-- 1 root root 1010 Nov  9  2018 debug-shell.service
+-rw-r--r-- 1 root root 1009 Nov  9  2018 emergency.service
+-rw-r--r-- 1 root root 1.5K Nov  9  2018 getty@.service
+-rw-r--r-- 1 root root  630 Nov  9  2018 initrd-cleanup.service
+-rw-r--r-- 1 root root  790 Nov  9  2018 initrd-parse-etc.service
+-rw-r--r-- 1 root root  640 Nov  9  2018 initrd-switch-root.service
+-rw-r--r-- 1 root root  664 Nov  9  2018 initrd-udevadm-cleanup-db.service
+-rw-r--r-- 1 root root  677 Nov  9  2018 kmod-static-nodes.service
+-rw-r--r-- 1 root root  473 Nov  9  2018 mail-transport-agent.target
+-rw-r--r-- 1 root root  568 Nov  9  2018 quotaon.service
+-rw-r--r-- 1 root root  612 Nov  9  2018 rc-local.service
+-rw-r--r-- 1 root root  978 Nov  9  2018 rescue.service
+-rw-r--r-- 1 root root 1.1K Nov  9  2018 serial-getty@.service
+-rw-r--r-- 1 root root  653 Nov  9  2018 systemd-ask-password-console.service
+-rw-r--r-- 1 root root  681 Nov  9  2018 systemd-ask-password-wall.service
+-rw-r--r-- 1 root root  724 Nov  9  2018 systemd-backlight@.service
+-rw-r--r-- 1 root root  959 Nov  9  2018 systemd-binfmt.service
+-rw-r--r-- 1 root root  650 Nov  9  2018 systemd-bootchart.service
+-rw-r--r-- 1 root root 1.0K Nov  9  2018 systemd-bus-proxyd.service
+-rw-r--r-- 1 root root  497 Nov  9  2018 systemd-exit.service
+-rw-r--r-- 1 root root  674 Nov  9  2018 systemd-fsck-root.service
+-rw-r--r-- 1 root root  648 Nov  9  2018 systemd-fsck@.service
+-rw-r--r-- 1 root root  551 Nov  9  2018 systemd-fsckd.service
+-rw-r--r-- 1 root root  544 Nov  9  2018 systemd-halt.service
+-rw-r--r-- 1 root root  631 Nov  9  2018 systemd-hibernate-resume@.service
+-rw-r--r-- 1 root root  501 Nov  9  2018 systemd-hibernate.service
+-rw-r--r-- 1 root root  710 Nov  9  2018 systemd-hostnamed.service
+-rw-r--r-- 1 root root  519 Nov  9  2018 systemd-hybrid-sleep.service
+-rw-r--r-- 1 root root  480 Nov  9  2018 systemd-initctl.service
+-rw-r--r-- 1 root root  731 Nov  9  2018 systemd-journal-flush.service
+-rw-r--r-- 1 root root 1.3K Nov  9  2018 systemd-journald.service
+-rw-r--r-- 1 root root  557 Nov  9  2018 systemd-kexec.service
+-rw-r--r-- 1 root root  691 Nov  9  2018 systemd-localed.service
+-rw-r--r-- 1 root root 1.2K Nov  9  2018 systemd-logind.service
+-rw-r--r-- 1 root root  693 Nov  9  2018 systemd-machine-id-commit.service
+-rw-r--r-- 1 root root  967 Nov  9  2018 systemd-modules-load.service
+-rw-r--r-- 1 root root  685 Nov  9  2018 systemd-networkd-wait-online.service
+-rw-r--r-- 1 root root 1.3K Nov  9  2018 systemd-networkd.service
+-rw-r--r-- 1 root root  553 Nov  9  2018 systemd-poweroff.service
+-rw-r--r-- 1 root root  614 Nov  9  2018 systemd-quotacheck.service
+-rw-r--r-- 1 root root  717 Nov  9  2018 systemd-random-seed.service
+-rw-r--r-- 1 root root  548 Nov  9  2018 systemd-reboot.service
+-rw-r--r-- 1 root root  757 Nov  9  2018 systemd-remount-fs.service
+-rw-r--r-- 1 root root  907 Nov  9  2018 systemd-resolved.service
+-rw-r--r-- 1 root root  696 Nov  9  2018 systemd-rfkill.service
+-rw-r--r-- 1 root root  497 Nov  9  2018 systemd-suspend.service
+-rw-r--r-- 1 root root  653 Nov  9  2018 systemd-sysctl.service
+-rw-r--r-- 1 root root  655 Nov  9  2018 systemd-timedated.service
+-rw-r--r-- 1 root root 1.1K Nov  9  2018 systemd-timesyncd.service
+-rw-r--r-- 1 root root  598 Nov  9  2018 systemd-tmpfiles-clean.service
+-rw-r--r-- 1 root root  703 Nov  9  2018 systemd-tmpfiles-setup-dev.service
+-rw-r--r-- 1 root root  683 Nov  9  2018 systemd-tmpfiles-setup.service
+-rw-r--r-- 1 root root  757 Nov  9  2018 systemd-update-utmp-runlevel.service
+-rw-r--r-- 1 root root  754 Nov  9  2018 systemd-update-utmp.service
+-rw-r--r-- 1 root root  573 Nov  9  2018 systemd-user-sessions.service
+-rw-r--r-- 1 root root  528 Nov  9  2018 user@.service
+-rw-r--r-- 1 root root  403 Nov  9  2018 -.slice
+-rw-r--r-- 1 root root  879 Nov  9  2018 basic.target
+-rw-r--r-- 1 root root  379 Nov  9  2018 bluetooth.target
+-rw-r--r-- 1 root root  358 Nov  9  2018 busnames.target
+-rw-r--r-- 1 root root  394 Nov  9  2018 cryptsetup-pre.target
+-rw-r--r-- 1 root root  366 Nov  9  2018 cryptsetup.target
+-rw-r--r-- 1 root root  670 Nov  9  2018 dev-hugepages.mount
+-rw-r--r-- 1 root root  624 Nov  9  2018 dev-mqueue.mount
+-rw-r--r-- 1 root root  431 Nov  9  2018 emergency.target
+-rw-r--r-- 1 root root  501 Nov  9  2018 exit.target
+-rw-r--r-- 1 root root  440 Nov  9  2018 final.target
+-rw-r--r-- 1 root root  460 Nov  9  2018 getty.target
+-rw-r--r-- 1 root root  558 Nov  9  2018 graphical.target
+-rw-r--r-- 1 root root  487 Nov  9  2018 halt.target
+-rw-r--r-- 1 root root  447 Nov  9  2018 hibernate.target
+-rw-r--r-- 1 root root  468 Nov  9  2018 hybrid-sleep.target
+-rw-r--r-- 1 root root  553 Nov  9  2018 initrd-fs.target
+-rw-r--r-- 1 root root  526 Nov  9  2018 initrd-root-fs.target
+-rw-r--r-- 1 root root  691 Nov  9  2018 initrd-switch-root.target
+-rw-r--r-- 1 root root  671 Nov  9  2018 initrd.target
+-rw-r--r-- 1 root root  501 Nov  9  2018 kexec.target
+-rw-r--r-- 1 root root  395 Nov  9  2018 local-fs-pre.target
+-rw-r--r-- 1 root root  507 Nov  9  2018 local-fs.target
+-rw-r--r-- 1 root root  405 Nov  9  2018 machine.slice
+-rw-r--r-- 1 root root  492 Nov  9  2018 multi-user.target
+-rw-r--r-- 1 root root  464 Nov  9  2018 network-online.target
+-rw-r--r-- 1 root root  461 Nov  9  2018 network-pre.target
+-rw-r--r-- 1 root root  480 Nov  9  2018 network.target
+-rw-r--r-- 1 root root  514 Nov  9  2018 nss-lookup.target
+-rw-r--r-- 1 root root  473 Nov  9  2018 nss-user-lookup.target
+-rw-r--r-- 1 root root  354 Nov  9  2018 paths.target
+-rw-r--r-- 1 root root  552 Nov  9  2018 poweroff.target
+-rw-r--r-- 1 root root  377 Nov  9  2018 printer.target
+-rw-r--r-- 1 root root  693 Nov  9  2018 proc-sys-fs-binfmt_misc.automount
+-rw-r--r-- 1 root root  603 Nov  9  2018 proc-sys-fs-binfmt_misc.mount
+-rw-r--r-- 1 root root  543 Nov  9  2018 reboot.target
+-rw-r--r-- 1 root root  396 Nov  9  2018 remote-fs-pre.target
+-rw-r--r-- 1 root root  482 Nov  9  2018 remote-fs.target
+-rw-r--r-- 1 root root  486 Nov  9  2018 rescue.target
+-rw-r--r-- 1 root root  500 Nov  9  2018 rpcbind.target
+-rw-r--r-- 1 root root  402 Nov  9  2018 shutdown.target
+-rw-r--r-- 1 root root  362 Nov  9  2018 sigpwr.target
+-rw-r--r-- 1 root root  420 Nov  9  2018 sleep.target
+-rw-r--r-- 1 root root  409 Nov  9  2018 slices.target
+-rw-r--r-- 1 root root  380 Nov  9  2018 smartcard.target
+-rw-r--r-- 1 root root  356 Nov  9  2018 sockets.target
+-rw-r--r-- 1 root root  380 Nov  9  2018 sound.target
+-rw-r--r-- 1 root root  441 Nov  9  2018 suspend.target
+-rw-r--r-- 1 root root  353 Nov  9  2018 swap.target
+-rw-r--r-- 1 root root  715 Nov  9  2018 sys-fs-fuse-connections.mount
+-rw-r--r-- 1 root root  719 Nov  9  2018 sys-kernel-config.mount
+-rw-r--r-- 1 root root  662 Nov  9  2018 sys-kernel-debug.mount
+-rw-r--r-- 1 root root  518 Nov  9  2018 sysinit.target
+-rw-r--r-- 1 root root 1.3K Nov  9  2018 syslog.socket
+-rw-r--r-- 1 root root  585 Nov  9  2018 system-update.target
+-rw-r--r-- 1 root root  436 Nov  9  2018 system.slice
+-rw-r--r-- 1 root root  646 Nov  9  2018 systemd-ask-password-console.path
+-rw-r--r-- 1 root root  574 Nov  9  2018 systemd-ask-password-wall.path
+-rw-r--r-- 1 root root  409 Nov  9  2018 systemd-bus-proxyd.socket
+-rw-r--r-- 1 root root  540 Nov  9  2018 systemd-fsckd.socket
+-rw-r--r-- 1 root root  524 Nov  9  2018 systemd-initctl.socket
+-rw-r--r-- 1 root root  607 Nov  9  2018 systemd-journald-audit.socket
+-rw-r--r-- 1 root root 1.1K Nov  9  2018 systemd-journald-dev-log.socket
+-rw-r--r-- 1 root root  842 Nov  9  2018 systemd-journald.socket
+-rw-r--r-- 1 root root  591 Nov  9  2018 systemd-networkd.socket
+-rw-r--r-- 1 root root  617 Nov  9  2018 systemd-rfkill.socket
+-rw-r--r-- 1 root root  450 Nov  9  2018 systemd-tmpfiles-clean.timer
+-rw-r--r-- 1 root root  395 Nov  9  2018 time-sync.target
+-rw-r--r-- 1 root root  405 Nov  9  2018 timers.target
+-rw-r--r-- 1 root root  417 Nov  9  2018 umount.target
+-rw-r--r-- 1 root root  392 Nov  9  2018 user.slice
+-rw-r--r-- 1 root root  342 Nov  8  2018 getty-static.service
+-rw-r--r-- 1 root root  153 Nov  8  2018 sigpwr-container-shutdown.service
+-rw-r--r-- 1 root root  175 Nov  8  2018 systemd-networkd-resolvconf-update.path
+-rw-r--r-- 1 root root  715 Nov  8  2018 systemd-networkd-resolvconf-update.service
+-rw-r--r-- 1 root root  238 Oct  9  2018 apt-daily-upgrade.service
+-rw-r--r-- 1 root root  184 Oct  9  2018 apt-daily-upgrade.timer
+-rw-r--r-- 1 root root  225 Oct  9  2018 apt-daily.service
+-rw-r--r-- 1 root root  156 Oct  9  2018 apt-daily.timer
+-rw-r--r-- 1 root root  445 Aug 21  2018 ssh.service
+-rw-r--r-- 1 root root  216 Aug 21  2018 ssh.socket
+-rw-r--r-- 1 root root  196 Aug 21  2018 ssh@.service
+drwxr-xr-x 2 root root 4.0K Apr 12  2016 runlevel1.target.wants
+drwxr-xr-x 2 root root 4.0K Apr 12  2016 runlevel2.target.wants
+drwxr-xr-x 2 root root 4.0K Apr 12  2016 runlevel3.target.wants
+drwxr-xr-x 2 root root 4.0K Apr 12  2016 runlevel4.target.wants
+drwxr-xr-x 2 root root 4.0K Apr 12  2016 runlevel5.target.wants
+
+/lib/systemd/system/busnames.target.wants:
+total 0
+
+/lib/systemd/system/getty.target.wants:
+total 0
+lrwxrwxrwx 1 root root 23 Nov  9  2018 getty-static.service -> ../getty-static.service
+
+/lib/systemd/system/graphical.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Nov  9  2018 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/local-fs.target.wants:
+total 0
+lrwxrwxrwx 1 root root 29 Nov  9  2018 systemd-remount-fs.service -> ../systemd-remount-fs.service
+
+/lib/systemd/system/multi-user.target.wants:
+total 0
+lrwxrwxrwx 1 root root 15 Nov  9  2018 getty.target -> ../getty.target
+lrwxrwxrwx 1 root root 33 Nov  9  2018 systemd-ask-password-wall.path -> ../systemd-ask-password-wall.path
+lrwxrwxrwx 1 root root 25 Nov  9  2018 systemd-logind.service -> ../systemd-logind.service
+lrwxrwxrwx 1 root root 39 Nov  9  2018 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+lrwxrwxrwx 1 root root 32 Nov  9  2018 systemd-user-sessions.service -> ../systemd-user-sessions.service
+
+/lib/systemd/system/poweroff.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Nov  9  2018 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/rc-local.service.d:
+total 4.0K
+-rw-r--r-- 1 root root 290 Nov  8  2018 debian.conf
+
+/lib/systemd/system/reboot.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Nov  9  2018 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/rescue.target.wants:
+total 0
+lrwxrwxrwx 1 root root 39 Nov  9  2018 systemd-update-utmp-runlevel.service -> ../systemd-update-utmp-runlevel.service
+
+/lib/systemd/system/resolvconf.service.wants:
+total 0
+lrwxrwxrwx 1 root root 42 Nov  9  2018 systemd-networkd-resolvconf-update.path -> ../systemd-networkd-resolvconf-update.path
+
+/lib/systemd/system/sigpwr.target.wants:
+total 0
+lrwxrwxrwx 1 root root 36 Nov  9  2018 sigpwr-container-shutdown.service -> ../sigpwr-container-shutdown.service
+
+/lib/systemd/system/sockets.target.wants:
+total 0
+lrwxrwxrwx 1 root root 25 Nov  9  2018 systemd-initctl.socket -> ../systemd-initctl.socket
+lrwxrwxrwx 1 root root 32 Nov  9  2018 systemd-journald-audit.socket -> ../systemd-journald-audit.socket
+lrwxrwxrwx 1 root root 34 Nov  9  2018 systemd-journald-dev-log.socket -> ../systemd-journald-dev-log.socket
+lrwxrwxrwx 1 root root 26 Nov  9  2018 systemd-journald.socket -> ../systemd-journald.socket
+
+/lib/systemd/system/sysinit.target.wants:
+total 0
+lrwxrwxrwx 1 root root 20 Nov  9  2018 cryptsetup.target -> ../cryptsetup.target
+lrwxrwxrwx 1 root root 22 Nov  9  2018 dev-hugepages.mount -> ../dev-hugepages.mount
+lrwxrwxrwx 1 root root 19 Nov  9  2018 dev-mqueue.mount -> ../dev-mqueue.mount
+lrwxrwxrwx 1 root root 28 Nov  9  2018 kmod-static-nodes.service -> ../kmod-static-nodes.service
+lrwxrwxrwx 1 root root 36 Nov  9  2018 proc-sys-fs-binfmt_misc.automount -> ../proc-sys-fs-binfmt_misc.automount
+lrwxrwxrwx 1 root root 32 Nov  9  2018 sys-fs-fuse-connections.mount -> ../sys-fs-fuse-connections.mount
+lrwxrwxrwx 1 root root 26 Nov  9  2018 sys-kernel-config.mount -> ../sys-kernel-config.mount
+lrwxrwxrwx 1 root root 25 Nov  9  2018 sys-kernel-debug.mount -> ../sys-kernel-debug.mount
+lrwxrwxrwx 1 root root 36 Nov  9  2018 systemd-ask-password-console.path -> ../systemd-ask-password-console.path
+lrwxrwxrwx 1 root root 25 Nov  9  2018 systemd-binfmt.service -> ../systemd-binfmt.service
+lrwxrwxrwx 1 root root 32 Nov  9  2018 systemd-journal-flush.service -> ../systemd-journal-flush.service
+lrwxrwxrwx 1 root root 27 Nov  9  2018 systemd-journald.service -> ../systemd-journald.service
+lrwxrwxrwx 1 root root 36 Nov  9  2018 systemd-machine-id-commit.service -> ../systemd-machine-id-commit.service
+lrwxrwxrwx 1 root root 31 Nov  9  2018 systemd-modules-load.service -> ../systemd-modules-load.service
+lrwxrwxrwx 1 root root 30 Nov  9  2018 systemd-random-seed.service -> ../systemd-random-seed.service
+lrwxrwxrwx 1 root root 25 Nov  9  2018 systemd-sysctl.service -> ../systemd-sysctl.service
+lrwxrwxrwx 1 root root 37 Nov  9  2018 systemd-tmpfiles-setup-dev.service -> ../systemd-tmpfiles-setup-dev.service
+lrwxrwxrwx 1 root root 33 Nov  9  2018 systemd-tmpfiles-setup.service -> ../systemd-tmpfiles-setup.service
+lrwxrwxrwx 1 root root 30 Nov  9  2018 systemd-update-utmp.service -> ../systemd-update-utmp.service
+
+/lib/systemd/system/systemd-resolved.service.d:
+total 4.0K
+-rw-r--r-- 1 root root 200 Nov  8  2018 resolvconf.conf
+
+/lib/systemd/system/systemd-timesyncd.service.d:
+total 4.0K
+-rw-r--r-- 1 root root 251 Nov  8  2018 disable-with-time-daemon.conf
+
+/lib/systemd/system/timers.target.wants:
+total 0
+lrwxrwxrwx 1 root root 31 Nov  9  2018 systemd-tmpfiles-clean.timer -> ../systemd-tmpfiles-clean.timer
+
+/lib/systemd/system/runlevel1.target.wants:
+total 0
+
+/lib/systemd/system/runlevel2.target.wants:
+total 0
+
+/lib/systemd/system/runlevel3.target.wants:
+total 0
+
+/lib/systemd/system/runlevel4.target.wants:
+total 0
+
+/lib/systemd/system/runlevel5.target.wants:
+total 0
+
+/lib/systemd/network:
+total 8.0K
+-rw-r--r-- 1 root root 404 Nov  9  2018 80-container-host0.network
+-rw-r--r-- 1 root root 482 Nov  9  2018 80-container-ve.network
+
+/lib/systemd/system-generators:
+total 668K
+-rwxr-xr-x 1 root root  71K Nov  9  2018 systemd-cryptsetup-generator
+-rwxr-xr-x 1 root root  59K Nov  9  2018 systemd-dbus1-generator
+-rwxr-xr-x 1 root root  43K Nov  9  2018 systemd-debug-generator
+-rwxr-xr-x 1 root root  79K Nov  9  2018 systemd-fstab-generator
+-rwxr-xr-x 1 root root  39K Nov  9  2018 systemd-getty-generator
+-rwxr-xr-x 1 root root 119K Nov  9  2018 systemd-gpt-auto-generator
+-rwxr-xr-x 1 root root  39K Nov  9  2018 systemd-hibernate-resume-generator
+-rwxr-xr-x 1 root root  39K Nov  9  2018 systemd-insserv-generator
+-rwxr-xr-x 1 root root  35K Nov  9  2018 systemd-rc-local-generator
+-rwxr-xr-x 1 root root  31K Nov  9  2018 systemd-system-update-generator
+-rwxr-xr-x 1 root root 103K Nov  9  2018 systemd-sysv-generator
+
+/lib/systemd/system-preset:
+total 4.0K
+-rw-r--r-- 1 root root 869 Nov  9  2018 90-systemd.preset
+
+/lib/systemd/system-shutdown:
+total 0
+
+/lib/systemd/system-sleep:
+total 0
+
+
+[00;33m### SOFTWARE #############################################[00m
+[00;31m[-] Postgres version:[00m
+psql (PostgreSQL) 9.6.8
+
+
+[00;33m### INTERESTING FILES ####################################[00m
+[00;31m[-] Useful file locations:[00m
+/bin/nc
+/bin/netcat
+/usr/bin/wget
+/opt/gitlab/embedded/bin/curl
+
+
+[00;31m[-] Can we read/write sensitive files:[00m
+-rw-r--r-- 1 root root 1767 Dec  2 10:45 /etc/passwd
+-rw-r--r-- 1 root root 736 Dec  2 10:45 /etc/group
+-rw-r--r-- 1 root root 575 Oct 22  2015 /etc/profile
+-rw-r----- 1 root shadow 1061 Dec  2 10:45 /etc/shadow
+
+
+[00;31m[-] SUID files:[00m
+-rwsr-xr-x 1 root root 428240 Nov  5  2018 /usr/lib/openssh/ssh-keysign
+-rwsr-xr-x 1 root root 75304 May 16  2017 /usr/bin/gpasswd
+-rwsr-xr-x 1 root root 54256 May 16  2017 /usr/bin/passwd
+-rwsr-xr-x 1 root root 40432 May 16  2017 /usr/bin/chsh
+-rwsr-xr-x 1 root root 49584 May 16  2017 /usr/bin/chfn
+-rwsr-xr-x 1 root root 39904 May 16  2017 /usr/bin/newgrp
+-rwsr-xr-x 1 root root 40152 May 16  2018 /bin/mount
+-rwsr-xr-x 1 root root 27608 May 16  2018 /bin/umount
+-rwsr-xr-x 1 root root 40128 May 16  2017 /bin/su
+
+
+[00;31m[-] SGID files:[00m
+-rwxr-sr-x 1 root tty 27368 May 16  2018 /usr/bin/wall
+-rwxr-sr-x 1 root shadow 22768 May 16  2017 /usr/bin/expiry
+-rwxr-sr-x 1 root shadow 62336 May 16  2017 /usr/bin/chage
+-rwxr-sr-x 1 root ssh 358624 Nov  5  2018 /usr/bin/ssh-agent
+-rwxr-sr-x 1 root shadow 35632 Apr  9  2018 /sbin/pam_extrausers_chkpwd
+-rwxr-sr-x 1 root shadow 35600 Apr  9  2018 /sbin/unix_chkpwd
+
+
+[-] Can't search *.conf files as no keyword was entered
+
+[-] Can't search *.php files as no keyword was entered
+
+[-] Can't search *.log files as no keyword was entered
+
+[-] Can't search *.ini files as no keyword was entered
+
+[00;31m[-] All *.conf files in /etc (recursive 1 level):[00m
+-rw-r--r-- 1 root root 34 Jan 27  2016 /etc/ld.so.conf
+-rw-r--r-- 1 root root 92 Oct 22  2015 /etc/host.conf
+-rw-r--r-- 1 root root 604 Jul  2  2015 /etc/deluser.conf
+-rw-r--r-- 1 root root 3028 Nov 13  2018 /etc/adduser.conf
+-rw-r--r-- 1 root root 497 May  4  2014 /etc/nsswitch.conf
+-rw-r--r-- 1 root root 2084 Sep  6  2015 /etc/sysctl.conf
+-rw-r--r-- 1 root root 771 Mar  6  2015 /etc/insserv.conf
+-rw-r--r-- 1 root root 967 Oct 30  2015 /etc/mke2fs.conf
+-rw-r--r-- 1 root root 2584 Feb 18  2016 /etc/gai.conf
+-rw-r--r-- 1 root root 552 Mar 16  2016 /etc/pam.conf
+-rw-r--r-- 1 root root 38 Dec 24 23:00 /etc/resolv.conf
+-rw-r--r-- 1 root root 2969 Nov 10  2015 /etc/debconf.conf
+-rw-r--r-- 1 root root 191 Jan 18  2016 /etc/libaudit.conf
+-rw-r--r-- 1 root root 6488 Nov 20  2018 /etc/ca-certificates.conf
+
+
+[00;31m[-] Location and contents (if accessible) of .bash_history file(s):[00m
+/home/dude/.bash_history
+
+
+[00;31m[-] Any interesting mail in /var/mail:[00m
+total 12
+drwxrwsr-x 2 root mail 4096 Nov 13  2018 .
+drwxr-xr-x 1 root root 4096 Nov 13  2018 ..
+
+
+[00;33m[+] Looks like we're in a Docker container:[00m
+12:memory:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+10:devices:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+9:net_cls,net_prio:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+8:perf_event:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+7:blkio:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+6:freezer:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+5:hugetlb:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+4:cpu,cpuacct:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+3:cpuset:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+2:pids:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+1:name=systemd:/docker/7eb263389e5eea068ad3d0c208ea4dd02ba86fa0b2ebd44f63adc391351fba6d
+-rwxr-xr-x 1 root root 0 Dec  1 12:41 /.dockerenv
+
+
+[00;31m[-] Anything juicy in the Dockerfile:[00m
+total 76
+-rw-r--r-- 1 root root  410 Nov 20  2018 Binary-alpine.Dockerfile
+-rw-r--r-- 1 root root  649 Nov 20  2018 Binary-scratch.Dockerfile
+-rw-r--r-- 1 root root  332 Nov 20  2018 Binary.Dockerfile
+-rw-r--r-- 1 root root 2377 Nov 20  2018 CONTRIBUTING.md
+-rw-r--r-- 1 root root  290 Nov 20  2018 Golang-alpine.Dockerfile
+-rw-r--r-- 1 root root  502 Nov 20  2018 Golang-scratch.Dockerfile
+-rw-r--r-- 1 root root  205 Nov 20  2018 Golang.Dockerfile
+-rw-r--r-- 1 root root   54 Nov 20  2018 HTTPd.Dockerfile
+-rw-r--r-- 1 root root 1278 Nov 20  2018 LICENSE
+-rw-r--r-- 1 root root  341 Nov 20  2018 Node-alpine.Dockerfile
+-rw-r--r-- 1 root root  231 Nov 20  2018 Node.Dockerfile
+-rw-r--r-- 1 root root  111 Nov 20  2018 OpenJDK-alpine.Dockerfile
+-rw-r--r-- 1 root root  319 Nov 20  2018 OpenJDK.Dockerfile
+-rw-r--r-- 1 root root  480 Nov 20  2018 PHP.Dockerfile
+-rw-r--r-- 1 root root  443 Nov 20  2018 Python-alpine.Dockerfile
+-rw-r--r-- 1 root root  531 Nov 20  2018 Python.Dockerfile
+-rw-r--r-- 1 root root  199 Nov 20  2018 Python2.Dockerfile
+-rw-r--r-- 1 root root  687 Nov 20  2018 Ruby-alpine.Dockerfile
+-rw-r--r-- 1 root root  643 Nov 20  2018 Ruby.Dockerfile
+-rw-r--r-- 1 root root 418 Nov 20  2018 /opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/fog-google-1.7.1/ci/docker-image/Dockerfile
+-rw-r--r-- 1 root root 802 Nov 20  2018 /opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/sidekiq-cron-0.6.0/Dockerfile
+-rw-r--r-- 1 root root 412 Nov 20  2018 /opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/flipper-0.13.0/Dockerfile
+
+
+[00;31m[-] Anything juicy in docker-compose.yml:[00m
+-rw-r--r-- 1 root root 38 Nov 20  2018 /opt/gitlab/embedded/service/gitlab-rails/docker-compose.yml
+-rw-r--r-- 1 root root 430 Nov 20  2018 /opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/sidekiq-cron-0.6.0/docker-compose.yml
+-rw-r--r-- 1 root root 674 Nov 20  2018 /opt/gitlab/embedded/lib/ruby/gems/2.4.0/gems/flipper-0.13.0/docker-compose.yml
+-rw-r--r-- 1 root root 872 Dec  7 09:25 /opt/backup/docker-compose.yml
+
+
+[00;33m### SCAN COMPLETE ####################################[00m

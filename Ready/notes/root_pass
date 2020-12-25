@@ -1,0 +1,9 @@
+YG65407Bjqvv9A0a8Tm_7w
+
+gitlab_rails['smtp_password'] = "wW59U!ZKMbG9+*#h"
+
+
+{"gitlab":{"postgresql":{"data_dir":"/var/opt/gitlab/postgresql/data","unix_socket_directory":"/var/opt/gitlab/postgresql","port":5432},"gitlab-rails":{"db_database":"gitlabhq_production"}}}
+
+gitlab_workhorse
+/HvvEvI/T33qyvK1U4jmnfH7fGxzySlzuhewkOR9Zk0=
